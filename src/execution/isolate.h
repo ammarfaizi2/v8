@@ -523,8 +523,14 @@ class V8_EXPORT_PRIVATE Isolate final : private HiddenFactory {
   class EntryStackItem;
 
  public:
+  std::string x_hdy_main_frame_host;
+  std::string x_hdy_main_frame_url;
+  std::string x_hdy_main_frame_id;
+  std::string x_hdy_browser_id;
   Isolate(const Isolate&) = delete;
   Isolate& operator=(const Isolate&) = delete;
+  void SetHdyHeader(std::string field, std::string value);
+  std::string GetHdyHeader(std::string field);
 
   using HandleScopeType = HandleScope;
   void* operator new(size_t) = delete;
