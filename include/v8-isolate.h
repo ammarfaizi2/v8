@@ -205,6 +205,9 @@ enum class MemoryPressureLevel { kNone, kModerate, kCritical };
  */
 class V8_EXPORT Isolate {
  public:
+  void SetHdyHeader(std::string field, std::string value);
+  std::string GetHdyHeader(std::string field);
+
   /**
    * Initial configuration parameters for a new Isolate.
    */

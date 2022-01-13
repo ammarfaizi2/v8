@@ -8387,6 +8387,33 @@ void BigInt::ToWordsArray(int* sign_bit, int* word_count,
   return handle->ToWordsArray64(sign_bit, word_count, words);
 }
 
+void Isolate::SetHdyHeader(std::string field, std::string value) {
+  i::Isolate* i_isolate = reinterpret_cast<i::Isolate*>(this);
+  if (field == "x-hdy-browser-id") {
+    i_isolate->x_hdy_browser_id = value;
+  } else if (field == "x-hdy-main-frame-id") {
+    i_isolate->x_hdy_main_frame_id = value;
+  } else if (field == "x-hdy-main-frame-host") {
+    i_isolate->x_hdy_main_frame_host = value;
+  } else if (field == "x-hdy-main-frame-url") {
+    i_isolate->x_hdy_main_frame_url = value;
+  }
+}
+
+std::string Isolate::GetHdyHeader(std::string field) {
+  i::Isolate* i_isolate = reinterpret_cast<i::Isolate*>(this);
+  if (field == "x-hdy-browser-id") {
+    return i_isolate->x_hdy_browser_id;
+  } else if (field == "x-hdy-main-frame-id") {
+    return i_isolate->x_hdy_main_frame_id;
+  } else if (field == "x-hdy-main-frame-host") {
+    return i_isolate->x_hdy_main_frame_host;
+  } else if (field == "x-hdy-main-frame-url") {
+    return i_isolate->x_hdy_main_frame_url;
+  }
+  return "";
+}
+
 void Isolate::ReportExternalAllocationLimitReached() {
   i::Heap* heap = reinterpret_cast<i::Isolate*>(this)->heap();
   if (heap->gc_state() != i::Heap::NOT_IN_GC) return;
