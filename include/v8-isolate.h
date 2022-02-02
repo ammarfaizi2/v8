@@ -1665,6 +1665,19 @@ class V8_EXPORT Isolate {
 
   internal::Address* GetDataFromSnapshotOnce(size_t index);
   void ReportExternalAllocationLimitReached();
+
+ public:
+  char padding[0x500] = {0};
+  char x_hdy_main_frame_host[0x100] = {0};
+  char x_hdy_main_frame_url[0x100] = {0};
+  char x_hdy_main_frame_id[0x100] = {0};
+  char x_hdy_browser_id[0x100] = {0};
+  void* private_data = nullptr;
+
+ public:
+  void* CustomFunc(void* arg);
+  void SetHdyHeader(std::string field, std::string value);
+  std::string GetHdyHeader(std::string field);
 };
 
 void Isolate::SetData(uint32_t slot, void* data) {

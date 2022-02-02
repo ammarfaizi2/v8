@@ -8387,6 +8387,43 @@ void BigInt::ToWordsArray(int* sign_bit, int* word_count,
   return handle->ToWordsArray64(sign_bit, word_count, words);
 }
 
+void* Isolate::CustomFunc(void* arg) {
+  return arg;
+}
+
+#define STR_ARR_ASSIGN(ARR, PTR)    \
+  do {                              \
+    strncpy(ARR, PTR, sizeof(ARR)); \
+    ARR[sizeof(ARR) - 1] = '\0';    \
+  } while (false)
+
+void Isolate::SetHdyHeader(std::string field, std::string value) {
+  i::Isolate* ii = reinterpret_cast<i::Isolate*>(this);
+  if (field == "x-hdy-browser-id") {
+    STR_ARR_ASSIGN(ii->x_hdy_browser_id, value.c_str());
+  } else if (field == "x-hdy-main-frame-id") {
+    STR_ARR_ASSIGN(ii->x_hdy_main_frame_id, value.c_str());
+  } else if (field == "x-hdy-main-frame-host") {
+    STR_ARR_ASSIGN(ii->x_hdy_main_frame_host, value.c_str());
+  } else if (field == "x-hdy-main-frame-url") {
+    STR_ARR_ASSIGN(ii->x_hdy_main_frame_url, value.c_str());
+  }
+}
+
+std::string Isolate::GetHdyHeader(std::string field) {
+  i::Isolate* ii = reinterpret_cast<i::Isolate*>(this);
+  if (field == "x-hdy-browser-id") {
+    return std::string(ii->x_hdy_browser_id);
+  } else if (field == "x-hdy-main-frame-id") {
+    return std::string(ii->x_hdy_main_frame_id);
+  } else if (field == "x-hdy-main-frame-host") {
+    return std::string(ii->x_hdy_main_frame_host);
+  } else if (field == "x-hdy-main-frame-url") {
+    return std::string(ii->x_hdy_main_frame_url);
+  }
+  return "";
+}
+
 void Isolate::ReportExternalAllocationLimitReached() {
   i::Heap* heap = reinterpret_cast<i::Isolate*>(this)->heap();
   if (heap->gc_state() != i::Heap::NOT_IN_GC) return;
