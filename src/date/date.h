@@ -48,6 +48,9 @@ class V8_EXPORT_PRIVATE DateCache {
   void ResetDateCache(
       base::TimezoneCache::TimeZoneDetection time_zone_detection);
 
+  static void SetCustomTimezone(long offset);
+  static void EnableCustomTimezone();
+
   // Computes floor(time_ms / kMsPerDay).
   static int DaysFromTime(int64_t time_ms) {
     if (time_ms < 0) time_ms -= (kMsPerDay - 1);

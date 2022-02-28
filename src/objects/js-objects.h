@@ -1031,6 +1031,9 @@ class JSDate : public TorqueGeneratedJSDate<JSDate, JSObject> {
   static V8_WARN_UNUSED_RESULT MaybeHandle<JSDate> New(
       Handle<JSFunction> constructor, Handle<JSReceiver> new_target, double tv);
 
+  static void EnableCustomTimezone();
+  static void SetCustomTimezone(long offset_ms);
+
   // Returns the time value (UTC) identifying the current time.
   static double CurrentTimeValue(Isolate* isolate);
 

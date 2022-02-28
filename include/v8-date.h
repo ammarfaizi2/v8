@@ -27,6 +27,9 @@ class V8_EXPORT Date : public Object {
    */
   double ValueOf() const;
 
+  static void EnableCustomTimezone();
+  static void SetCustomTimezone(long offset_ms);
+
   V8_INLINE static Date* Cast(Value* value) {
 #ifdef V8_ENABLE_CHECKS
     CheckCast(value);

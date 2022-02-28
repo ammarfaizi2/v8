@@ -24,6 +24,19 @@ static const int kYearsOffset = 400000;
 static const char kDaysInMonths[] = {31, 28, 31, 30, 31, 30,
                                      31, 31, 30, 31, 30, 31};
 
+static double g_timezone_offset = static_cast<double>(60*60*7*1000);
+static bool g_use_custom_timezone = false;
+
+// static
+void DateCache::EnableCustomTimezone() {
+  g_use_custom_timezone = true;
+}
+
+// static
+void DateCache::SetCustomTimezone(long offset_ms) {
+  g_timezone_offset = static_cast<double>(offset_ms);
+}
+
 DateCache::DateCache()
     : stamp_(kNullAddress),
       tz_cache_(
@@ -213,6 +226,10 @@ void DateCache::BreakDownTime(int64_t time_ms, int* year, int* month, int* day,
 // ECMA 262 - ES#sec-local-time-zone-adjustment
 int DateCache::GetLocalOffsetFromOS(int64_t time_ms, bool is_utc) {
   double offset;
+
+  if (g_use_custom_timezone) {
+    return g_timezone_offset;
+  }
 #ifdef V8_INTL_SUPPORT
   if (FLAG_icu_timezone_data) {
     offset = tz_cache_->LocalTimeOffset(static_cast<double>(time_ms), is_utc);

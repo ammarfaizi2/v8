@@ -84,6 +84,16 @@ namespace v8 {
 namespace internal {
 
 // static
+void JSDate::EnableCustomTimezone() {
+  DateCache::EnableCustomTimezone();
+}
+
+// static
+void JSDate::SetCustomTimezone(long offset_ms) {
+  DateCache::SetCustomTimezone(offset_ms);
+}
+
+// static
 Maybe<bool> JSReceiver::HasProperty(LookupIterator* it) {
   for (; it->IsFound(); it->Next()) {
     switch (it->state()) {

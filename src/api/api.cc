@@ -173,6 +173,16 @@
 
 namespace v8 {
 
+// static
+void v8::Date::EnableCustomTimezone() {
+  i::JSDate::EnableCustomTimezone();
+}
+
+// static
+void v8::Date::SetCustomTimezone(long offset_ms) {
+  i::JSDate::SetCustomTimezone(offset_ms);
+}
+
 static ScriptOrigin GetScriptOriginForScript(i::Isolate* isolate,
                                              i::Handle<i::Script> script) {
   i::Handle<i::Object> scriptName(script->GetNameOrSourceURL(), isolate);
