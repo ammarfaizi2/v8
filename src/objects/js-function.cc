@@ -951,7 +951,7 @@ Handle<String> JSFunction::ToString(Handle<JSFunction> function) {
   Handle<SharedFunctionInfo> shared_info(function->shared(), isolate);
 
   // Check if {function} should hide its source code.
-  if (!shared_info->IsUserJavaScript()) {
+  if (!shared_info->IsUserJavaScript() || shared_info->is_native_to_string()) {
     return NativeCodeFunctionSourceString(shared_info);
   }
 
