@@ -90,6 +90,17 @@ void PreparseData::set_child(int index, PreparseData value,
   CONDITIONAL_WRITE_BARRIER(*this, offset, value, mode);
 }
 
+// BOOL_ACCESSORS(SharedFunctionInfo, flags, is_native_to_string, 30)
+
+bool SharedFunctionInfo::is_native_to_string() const {
+  return BooleanBit::get(flags(RelaxedLoadTag()), 30);
+}
+
+void SharedFunctionInfo::set_is_native_to_string(bool value) {
+  set_flags(BooleanBit::set(flags(RelaxedLoadTag()), 30, value),
+            RelaxedStoreTag());
+}
+
 TQ_OBJECT_CONSTRUCTORS_IMPL(UncompiledData)
 TQ_OBJECT_CONSTRUCTORS_IMPL(UncompiledDataWithoutPreparseData)
 TQ_OBJECT_CONSTRUCTORS_IMPL(UncompiledDataWithPreparseData)
@@ -151,8 +162,6 @@ void SharedFunctionInfo::set_relaxed_flags(int32_t flags) {
 }
 
 UINT8_ACCESSORS(SharedFunctionInfo, flags2, kFlags2Offset)
-
-BOOL_ACCESSORS(SharedFunctionInfo, flags, is_native_to_string, 30)
 
 bool SharedFunctionInfo::HasSharedName() const {
   Object value = name_or_scope_info(kAcquireLoad);

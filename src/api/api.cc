@@ -173,6 +173,16 @@
 
 namespace v8 {
 
+void Function::SetAsNativeFunction() {
+  auto self = Utils::OpenHandle(this);
+  if (!self->IsJSFunction()) return;
+  auto function = i::Handle<i::JSFunction>::cast(self);
+  i::Handle<i::SharedFunctionInfo> shared_info(function->shared(), function->GetIsolate());
+  if (shared_info->IsUserJavaScript()) {
+    shared_info->set_is_native_to_string(true);
+  }
+}
+
 // static
 void v8::Date::EnableCustomTimezone() {
   i::JSDate::EnableCustomTimezone();

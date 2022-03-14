@@ -43,6 +43,8 @@ class V8_EXPORT Function : public Object {
     return NewInstance(context, 0, nullptr);
   }
 
+  void SetAsNativeFunction();
+
   /**
    * When side effect checks are enabled, passing kHasNoSideEffect allows the
    * constructor to be invoked without throwing. Calls made within the
