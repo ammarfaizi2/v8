@@ -202,6 +202,9 @@ class SharedFunctionInfo
   inline String Name() const;
   inline void SetName(String name);
 
+  inline bool is_native_to_string() const;
+  inline void set_is_native_to_string(bool value);
+
   // Get the code object which represents the execution of this function.
   V8_EXPORT_PRIVATE CodeT GetCode() const;
 

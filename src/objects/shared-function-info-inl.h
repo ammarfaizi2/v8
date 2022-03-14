@@ -152,6 +152,8 @@ void SharedFunctionInfo::set_relaxed_flags(int32_t flags) {
 
 UINT8_ACCESSORS(SharedFunctionInfo, flags2, kFlags2Offset)
 
+BOOL_ACCESSORS(SharedFunctionInfo, flags, is_native_to_string, 30)
+
 bool SharedFunctionInfo::HasSharedName() const {
   Object value = name_or_scope_info(kAcquireLoad);
   if (value.IsScopeInfo()) {
